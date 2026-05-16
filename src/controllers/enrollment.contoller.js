@@ -1,4 +1,4 @@
-const Enrollment = require('../models/enrolment.model.js');
+const Enrollment = require('../models/enrollment.model.js');
 
 // Enroll a student in a course
 exports.enrollInCourse = async (req, res) => {
