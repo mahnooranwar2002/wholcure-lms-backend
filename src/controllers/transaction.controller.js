@@ -1,5 +1,5 @@
 const Transaction = require('../models/transaction.model.js');
-const Enrollment = require('../models/enrolment.model.js');
+const Enrollment = require('../models/enrollment.model.js');
 
 // Create a new transaction (and enroll user if success)
 exports.createTransaction = async (req, res) => {

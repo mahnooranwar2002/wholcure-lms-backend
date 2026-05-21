@@ -1,4 +1,4 @@
-const User = require('../models/users.model.js');
+const User = require('../models/user.model.js');
 const jwt = require('jsonwebtoken');
 // Leveraging your existing utilities
 const asyncHandler = require('../config/utils/asyncHandler');

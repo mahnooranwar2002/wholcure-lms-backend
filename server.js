@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const connectDB = require('./src/config/db'); // 💡 Integrated your db.js utility function
 
 // Load environment configurations
 dotenv.config();
@@ -22,7 +22,7 @@ const adminRoutes = require('./src/routes/admin.routes');
 const courseRoutes = require('./src/routes/course.routes');
 const enrollmentRoutes = require('./src/routes/enrollment.routes');
 const transactionRoutes = require('./src/routes/transaction.routes');
-const userRoutes = require('./src/routes/user.routes');
+const userRoutes = require('./src/routes/users.routes'); // 💡 Verified plural file name match
 
 // Mount routes to API endpoints
 app.use('/api/v1/admin', adminRoutes);
@@ -62,21 +62,10 @@ app.use((err, req, res, next) => {
 // 4. DATABASE CONNECT & ENGINE START
 // ==========================================
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
 
-if (!MONGO_URI) {
-    console.error("CRITICAL CONFIG ERROR: 'MONGO_URI' is missing from your environmental variables.");
-    process.exit(1);
-}
-
-mongoose.connect(MONGO_URI)
-    .then(() => {
-        console.log("🚀 MongoDB Database Connection Secured Successfully");
-        app.listen(PORT, () => {
-            console.log(`📡 Server Engine Deployment running on Port: ${PORT}`);
-        });
-    })
-    .catch((error) => {
-        console.error("❌ Mongoose Connection Initialization Failure:", error.message);
-        process.exit(1);
+// Execute modularized db validation and start server application pipeline
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log(`📡 Server Engine Deployment running on Port: ${PORT}`);
     });
+});
